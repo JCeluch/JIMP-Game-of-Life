@@ -13,3 +13,6 @@ cycles.o: cycles.c cycles.h
 
 read_write.o: read_write.c read_write.h
 
+clean:
+	rm *.o *.obr
+

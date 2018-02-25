@@ -7,7 +7,7 @@
 //int width, height;
 png_byte color_type;
 png_byte bit_depth;
-
+int number_of_passes;
 
 
 png_bytep * read_png_file(FILE* fp, int* height, int* width) {
