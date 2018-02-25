@@ -14,7 +14,7 @@ void fill_tab(tab_t* tab, png_bytep * row_pointers, int height, int width)
 			//row_pointers[y][3*x+1]=0;
 			if(row_pointers[y][3*x]==0)
 			{
-				if(tab->elem==tab->size-1)
+				if(tab->elem==tab->size)
 					enlarge_tab(tab);
 				tab->t[tab->elem]->x=x;	
 				tab->t[tab->elem]->y=y;
@@ -51,7 +51,7 @@ void enlarge_tab(tab_t* tab)
 {
 	tab->t=realloc(tab->t, 2*tab->size*sizeof(cell_t));
 	tab->size*=2;
-	for(int i=tab->elem;i<tab->size;i++)
+	for(int i=tab->occupated;i<tab->size;i++)
 	{
 		tab->t[i]=malloc(sizeof(cell_t));
 		tab->t[i]->x=0;	

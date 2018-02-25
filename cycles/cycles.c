@@ -42,12 +42,13 @@ void born(int x, int y, tab_t* tab, stack_t* stack, matrix_t** matrix)
 	{
 		if(tab->occupated==tab->size)
 			enlarge_tab(tab);
-		tab->t[tab->elem]->x=x;	
-		tab->t[tab->elem]->y=y;	
-		tab->t[tab->elem]->current=ALIVE;	
-		tab->t[tab->elem]->next=ALIVE;	
-		tab->t[tab->elem++]->neighbours=0;
+		tab->t[tab->occupated]->x=x;	
+		tab->t[tab->occupated]->y=y;	
+		tab->t[tab->occupated]->current=ALIVE;	
+		tab->t[tab->occupated]->next=ALIVE;	
+		tab->t[tab->occupated]->neighbours=0;
 		tab->occupated++;
+		tab->elem++;
 		matrix[y][x].state=ALIVE;
 		matrix[y][x].neighbours=0;
 	}	

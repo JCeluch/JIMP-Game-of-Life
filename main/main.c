@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 		
 	}
 	free_all_structs(tab, stack, row_pointers, matrix, height, width);
-	system("convert  -loop 0 -delay 10 *.obr myimage.gif");
+	system("convert  -loop 0 -delay 10 -size 50x50 *.obr myimage.gif");
 }		
 
 	
