@@ -26,7 +26,7 @@ void born(int x, int y, tab_t* tab, stack_t* stack, matrix_t** matrix)
 	if(stack->elem!=0)
 	{
 		int index=stack->s[--stack->elem];
-		if(tab->elem==tab->size-1)
+		if(tab->occupated==tab->size)
 			enlarge_tab(tab);
 		tab->t[index]->x=x;
 		tab->t[index]->y=y;
@@ -40,13 +40,14 @@ void born(int x, int y, tab_t* tab, stack_t* stack, matrix_t** matrix)
 	}
 	else
 	{
-		if(tab->elem==tab->size-1)
+		if(tab->occupated==tab->size)
 			enlarge_tab(tab);
 		tab->t[tab->elem]->x=x;	
 		tab->t[tab->elem]->y=y;	
 		tab->t[tab->elem]->current=ALIVE;	
 		tab->t[tab->elem]->next=ALIVE;	
 		tab->t[tab->elem++]->neighbours=0;
+		tab->occupated++;
 		matrix[y][x].state=ALIVE;
 		matrix[y][x].neighbours=0;
 	}	
@@ -141,7 +142,7 @@ enum State count_neighbours(matrix_t** matrix, int x, int y, int height, int wid
 			i=x;
 		else
 			i=x-1;
-		for(;i<=(x+1)&&i<=width;i++)
+		for(;i<=(x+1)&&i<width;i++)
 		{
 			if(matrix[y-1][i].state==ALIVE)
 				alive_neighbours++;
@@ -173,7 +174,7 @@ enum State count_neighbours(matrix_t** matrix, int x, int y, int height, int wid
 			i=x;
 		else
 			i=x-1;
-		for(;i<=(x+1)&&i<=width;i++)
+		for(;i<=(x+1)&&i<width;i++)
 		{
 			if(matrix[y+1][i].state==ALIVE)
 				alive_neighbours++;
@@ -194,8 +195,7 @@ void scan_tab(matrix_t** matrix, tab_t* tab, png_bytep * row_pointers, stack_t* 
 	int j=0;
 	
 	//count neighbours
-	//for(i=0;i<(tab->size-1);i++)
-	while(j<tab->elem-1)
+	while(j<tab->elem)
 	{
 		if(tab->t[i]->current==ALIVE)
 		{
@@ -209,19 +209,18 @@ void scan_tab(matrix_t** matrix, tab_t* tab, png_bytep * row_pointers, stack_t* 
 	j=0;
 
 	//change states
-	//for(i=0;i<(tab->size-1);i++)
-	while(j<tab->elem-1)
+	while(i<tab->occupated)
 	{
 		if(tab->t[i]->current==ALIVE&&tab->t[i]->next==DEAD) 				//jezeli ma umzec, to niech ginie
 		{
 			die(tab->t[i]->x, tab->t[i]->y, i, row_pointers, stack, tab, matrix);
-			j++;
+			//j++;
 			//row_pointers[tab->t[i]->y][tab->t[i]->x*3+1]=255;
 		}	
 		else if(tab->t[i]->current==ALIVE&&tab->t[i]->next==ALIVE)
 		{
 			tab->t[i]->neighbours=0;
-			j++;
+			//j++;
 			//row_pointers[tab->t[i]->y][tab->t[i]->x*3+1]=0;
 		}	
 		change_states(tab, matrix, row_pointers, stack, tab->t[i]->x, tab->t[i]->y, height, width);

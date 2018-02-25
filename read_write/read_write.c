@@ -63,7 +63,9 @@ png_bytep * read_png_file(FILE* fp, int* height, int* width) {
 
 
 
+  png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
   fclose(fp);
+
   return row_pointers;
 }
 
@@ -108,5 +110,6 @@ void write_png_file(char* file_name, png_bytep * row_pointers, int* height, int*
   /*for (y=0; y<height; y++)
     free(row_pointers[y]);
   free(row_pointers);*/
+  png_destroy_write_struct(&png_ptr1, &info_ptr1);
   fclose(fp);
 }

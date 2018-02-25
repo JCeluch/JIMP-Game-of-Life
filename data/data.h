@@ -18,6 +18,7 @@ typedef struct
 	cell_t** t;
 	int elem;
 	int size;
+	int occupated;
 } tab_t;
 
 	

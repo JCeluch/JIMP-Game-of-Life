@@ -4,8 +4,9 @@
 #include "../read_write/read_write.h"
 #include "../data/data.h"
 #include "../cycles/cycles.h"
+#include "../free/free.h"
 #define DEF_STACK_SIZE 400
-#define DEF_TAB_SIZE 600
+#define DEF_TAB_SIZE 500
 
 
 int main(int argc, char** argv)
@@ -24,17 +25,19 @@ int main(int argc, char** argv)
 	fill_tab(tab, row_pointers, height, width);
 
 	
-	
+	int a=0;
 	for(i=0;i<cycles;i++)
 	{
-		sprintf(buf, "%d.obr", i);
+		
+		sprintf(buf, "%03d.obr", i);
 		write_png_file(buf, row_pointers, &height, &width);
-		//colour(row_pointers, height, width);
+		
 		scan_tab(matrix, tab, row_pointers, stack, height, width);
-		//recolour(row_pointers, height, width);
+		
 		
 	}
-	system("convert  -loop 0 -delay 50 *.obr myimage.gif");
+	free_all_structs(tab, stack, row_pointers, matrix, height, width);
+	system("convert  -loop 0 -delay 10 *.obr myimage.gif");
 }		
 
 	

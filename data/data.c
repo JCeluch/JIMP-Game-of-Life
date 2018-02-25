@@ -22,6 +22,7 @@ void fill_tab(tab_t* tab, png_bytep * row_pointers, int height, int width)
 				tab->t[tab->elem]->next=ALIVE;
 				tab->t[tab->elem]->neighbours=0;
 				tab->elem++;
+				tab->occupated++;
 			}		
 		}
 	}	
@@ -33,6 +34,7 @@ tab_t* init_tab(int size)
 	tab->t=malloc(size* sizeof(cell_t*));
 	tab->size=size;
 	tab->elem=0;
+	tab->occupated=0;
 	for(int i=0;i<size;i++)
 	{
 		tab->t[i]=malloc(sizeof(cell_t));
@@ -62,7 +64,7 @@ void enlarge_tab(tab_t* tab)
 
 stack_t* init_stack(int size)
 {
-	stack_t* stack=malloc(sizeof(stack_t*));
+	stack_t* stack=malloc(sizeof(stack_t));
 	stack->s=malloc(size*sizeof(int));
 	stack->size=size;
 	stack->elem=0;
@@ -70,14 +72,14 @@ stack_t* init_stack(int size)
 }
 void enlarge_stack(stack_t* stack)
 {
-	stack=realloc(stack, 2*sizeof(stack));
+	stack->s=realloc(stack->s, 2*stack->size*sizeof(int));
 	stack->size*=2;
 }	
 
 matrix_t** m_matrix(int height, int width)
 {
 	int y;
-	matrix_t** rows=malloc(height * sizeof *rows);
+	matrix_t** rows=malloc(height*sizeof(matrix_t*));//(height * sizeof *rows);
 	for(y=0;y<height;y++)
 		rows[y]=malloc(width * sizeof(matrix_t));
 	return rows;
