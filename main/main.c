@@ -4,8 +4,8 @@
 #include "../read_write/read_write.h"
 #include "../data/data.h"
 #include "../cycles/cycles.h"
-#define DEF_STACK_SIZE 40000
-#define DEF_TAB_SIZE 60000
+#define DEF_STACK_SIZE 400
+#define DEF_TAB_SIZE 600
 
 
 int main(int argc, char** argv)
@@ -27,13 +27,14 @@ int main(int argc, char** argv)
 	
 	for(i=0;i<cycles;i++)
 	{
-		colour(row_pointers, height, width);
 		sprintf(buf, "%d.obr", i);
-		scan_tab(matrix, tab, row_pointers, stack, height, width);
-		recolour(row_pointers, height, width);
 		write_png_file(buf, row_pointers, &height, &width);
+		//colour(row_pointers, height, width);
+		scan_tab(matrix, tab, row_pointers, stack, height, width);
+		//recolour(row_pointers, height, width);
+		
 	}
-	system("convert  -loop 0 -delay 100 *.obr myimage.gif");
+	system("convert  -loop 0 -delay 50 *.obr myimage.gif");
 }		
 
 	

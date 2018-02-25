@@ -45,10 +45,19 @@ tab_t* init_tab(int size)
 	return tab;
 }
 
-void enlarge_tab(tab_t* t)
+void enlarge_tab(tab_t* tab)
 {
-	t=realloc(t, 2*sizeof*t);
-	t->size*=2;
+	tab->t=realloc(tab->t, 2*tab->size*sizeof(cell_t));
+	tab->size*=2;
+	for(int i=tab->elem;i<tab->size;i++)
+	{
+		tab->t[i]=malloc(sizeof(cell_t));
+		tab->t[i]->x=0;	
+		tab->t[i]->y=0;	
+		tab->t[i]->current=DEAD;	
+		tab->t[i]->next=DEAD;
+		tab->t[i]->neighbours=0;	
+	}
 }
 
 stack_t* init_stack(int size)
